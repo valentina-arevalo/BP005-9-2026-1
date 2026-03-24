@@ -1,0 +1,19 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int main() {
+    int time;
+    printf("Ingrese la hora en hora militar: ");
+    scanf("%d", &time);
+
+    bool isDay = time < 18;
+
+    if (isDay) {
+        printf("Good day.");
+    } 
+       else  {
+        printf("Good evening.");
+      }
+
+return 0;
+}

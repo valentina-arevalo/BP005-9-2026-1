@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-    int main(){
+int main(){
      int cod, edd;
      double valor;
      float  n1, n2, n3, promedio;
@@ -24,27 +24,27 @@
      printf("Digite su edad: ");
      scanf("%d", &edd);
 
-     printf("Digite la primera nota: ");
+     printf("Digite la primera nota (0.0 - 5.0): ");
      scanf("%f", &n1);
 
-     printf("Digite la segunda nota: ");
+     printf("Digite la segunda nota (0.0 - 5.0): ");
      scanf("%f", &n2);
 
-     printf("Digite la tercera nota: ");
+     printf("Digite la tercera nota (0.0 - 5.0): ");
      scanf("%f", &n3);
 
      printf("Ingrese el valor de la matricula: ");
      scanf("%lf", &valor);
 
-     printf("¿Tiene matricula activa? (1=si 0=no): ");
+     printf("Tiene matricula activa? (1=si 0=no): ");
      scanf("%d", &matricula);
 
-     printf("¿Presenta el documento o carnet? (1=si 0=no): ");
+     printf("Presento el documento o carnet? (1=si 0=no): ");
      scanf("%d", &docu);
-     printf("¿Aprobó la inducción? (1=si 0=no): ");
+     printf("Aprobo la induccion? (1=si 0=no): ");
      scanf("%d", &inducc);
 
-     printf("¿Es monitor de laboratorio? (1=si 0=no): ");
+     printf("Es monitor de laboratorio? (1=si 0=no): ");
      scanf("%d", &monitor);
 
     if (n1<0 || n1>5.0  || n2<0 || n2>5.0 || n3<0 || n3>5.0 ){
@@ -54,7 +54,7 @@
      promedio = (n1 + n2 + n3)/ 3;
 
      if (promedio < 3.0){
-        printf("Desempeño bajo\n");
+        printf("Desempeño bajo, Reprobado\n");
      }
         else if (promedio < 4.0){
                 printf("Desempeño Aceptable\n");
@@ -82,6 +82,8 @@
         else {
            printf("Acceso denegado al sistema\n ");
         }
+        printf("Nombre: %s %c\n", nombre, inicial);
+        printf("Edad: %d\n", edd);
     }
 
   return 0;

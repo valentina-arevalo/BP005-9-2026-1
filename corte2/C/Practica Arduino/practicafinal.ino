@@ -1,103 +1,167 @@
-const int PIN_POT_ANALOGICO = A2;  
-const int PIN_LED_PWM = 10;      
-const int LIMIT_ADC = 1023;     
-const int LIMIT_PWM = 255;       
-const float VOLTS_REF = 5.0;     
-const int SIZE_REGISTRO = 12;      
-const int DELAY_REGISTRO_MS = 20;
-const int RETARDO_BUCLE_MS = 1000;
-const int RANGO_UMBRAL = 50;
+const int PIN_POTENCIOMETRO = A0;
+const int PIN_LED = 9;
+const int ADC_MAX = 1023;
+const int PWM_MAX = 255;
+const float VREF = 5.0;
+const int CANTIDAD_LECTURAS = 10;
+const int PAUSA_ENTRE_LECTURAS_MS = 20;
+const int PAUSA_CICLO_MS = 1000;
+const int UMBRAL_LED = 50;
 
-void llenarHistorial(int pin, int bufer[], int longitud, int retardoMs) {
-    if (bufer == nullptr || longitud <= 0) return;
-    for (int i = 0; i < longitud; i++) {
-        bufer[i] = analogRead(pin);
-        delay(retardoMs);
-    }
+void tomarLecturas(int pin, int datos[], int cantidad, int pausaMs) {
+  if (datos == nullptr || cantidad <= 0) {
+    return;
+  }
+
+  for (int i = 0; i < cantidad; i++) {
+    datos[i] = analogRead(pin);
+    delay(pausaMs);
+  }
 }
 
-void analizarHistorial(int bufer[], int longitud, int *valMedia, int *valMin, int *valMax) {
-    if (bufer == nullptr || valMedia == nullptr || valMin == nullptr || valMax == nullptr || longitud <= 0) return;
-    long sumatoria = 0;
-    *valMin = bufer[0];
-    *valMax = bufer[0];
-    for (int i = 0; i < longitud; i++) {
-        sumatoria = sumatoria + bufer[i];
-        if (bufer[i] < *valMin) *valMin = bufer[i];
-        if (bufer[i] > *valMax) *valMax = bufer[i];
+void analizarLecturas(int datos[], int cantidad,
+                      int *promedio,
+                      int *minimo,
+                      int *maximo) {
+
+  if (datos == nullptr || promedio == nullptr || minimo == nullptr || maximo == nullptr || cantidad <= 0) {
+    return;
+  }
+
+  long suma = 0;
+
+  *minimo = datos[0];
+  *maximo = datos[0];
+
+  for (int i = 0; i < cantidad; i++) {
+    suma = suma + datos[i];
+
+    if (datos[i] < *minimo) {
+      *minimo = datos[i];
     }
-    *valMedia = (int)(sumatoria / longitud);
+
+    if (datos[i] > *maximo) {
+      *maximo = datos[i];
+    }
+  }
+
+  *promedio = (int)(suma / cantidad);
 }
 
-void ajustarEscalaPromedio(int valMedia, float *voltaje, int *porcentaje, int *intensidad) {
-    if (voltaje == nullptr || porcentaje == nullptr || intensidad == nullptr) return;
-    *voltaje = (valMedia * VOLTS_REF) / LIMIT_ADC;
-    *porcentaje = (int)((long)valMedia * 100L / LIMIT_ADC);
-    *intensidad = (int)((long)valMedia * LIMIT_PWM / LIMIT_ADC);
+void convertirPromedio(int promedioADC,
+                       float *voltaje,
+                       int *porcentaje,
+                       int *brilloPWM) {
+
+  if (voltaje == nullptr || porcentaje == nullptr || brilloPWM == nullptr) {
+    return;
+  }
+
+  *voltaje = (promedioADC * VREF) / ADC_MAX;
+  *porcentaje = (int)((long)promedioADC * 100L / ADC_MAX);
+  *brilloPWM = (int)((long)promedioADC * PWM_MAX / ADC_MAX);
 }
 
-void evaluarCondicionLED(int porcentaje, int limite, int *registroEstado) {
-    if (registroEstado == nullptr) return;
-    if (porcentaje >= limite) {
-        *registroEstado = HIGH;
-    } else {
-        *registroEstado = LOW;
-    }
+void decidirEstadoLED(int porcentaje, int umbral, int *estadoLED) {
+  if (estadoLED == nullptr) {
+    return;
+  }
+
+  if (porcentaje >= umbral) {
+    *estadoLED = HIGH;
+  } else {
+    *estadoLED = LOW;
+  }
 }
 
-void comandarSalidaCompleta(int pinTarget, int estadoLogico, int intensidad) {
-    if (estadoLogico == LOW) {
-        analogWrite(pinTarget, 0);
-    } else {
-        analogWrite(pinTarget, intensidad);
-    }
+void aplicarSalidaLED(int pinLED, int estadoLED, int brilloPWM) {
+  if (estadoLED == LOW) {
+    analogWrite(pinLED, 0);
+  } else {
+    analogWrite(pinLED, brilloPWM);
+  }
 }
 
-void imprimirMuestrasArreglo(int bufer[], int longitud) {
-    if (bufer == nullptr || longitud <= 0) return;
-    Serial.print("Muestras Capturadas: ");
-    for (int i = 0; i < longitud; i++) {
-        Serial.print(bufer[i]);
-        Serial.print(" ");
-    }
-    Serial.println();
+void mostrarLecturas(int datos[], int cantidad) {
+  if (datos == nullptr || cantidad <= 0) {
+    return;
+  }
+
+  Serial.print("Lecturas:");
+
+  for (int i = 0; i < cantidad; i++) {
+    Serial.print(datos[i]);
+    Serial.print("");
+  }
+
+  Serial.println();
 }
 
-void generarDiagnosticoSerial(int med, int min, int max, float v, int pct, int duty, int estadoLogico) {
-    Serial.print(">> PROMEDIO ARITMETICO: "); Serial.println(med);
-    Serial.print(">> MINI LECTURA: ");      Serial.println(min);
-    Serial.print(">> MAXI LECTURA: ");      Serial.println(max);
-    Serial.print(">> VOLTAJE CALCULADO: ");  Serial.print(v, 2); Serial.println(" v");
-    Serial.print(">> PORCENTAJE TOTAL: ");   Serial.print(pct); Serial.println(" %");
-    Serial.print(">> INTENSIDAD PWM: ");     Serial.println(duty);
-    Serial.print(">> ESTADO DIODO LED: ");
-    if (estadoLogico == HIGH) {
-        Serial.println("[ENCENDIDO / COMPLETO]");
-    } else {
-        Serial.println("[APAGADO / SEGURO]");
-    }
-    Serial.println("**************************************************");
+void mostrarReporte(int promedio, int minimo, int maximo,
+                    float voltaje, int porcentaje,
+                    int brilloPWM, int estadoLED) {
+
+  Serial.print("PromedioADC=");
+  Serial.println(promedio);
+
+  Serial.print("MinimoADC =");
+  Serial.println(minimo);
+
+  Serial.print("MaximoADC =");
+  Serial.println(maximo);
+
+  Serial.print("Voltaje =");
+  Serial.print(voltaje, 2);
+  Serial.println("V");
+
+  Serial.print("Porcentaje =");
+  Serial.print(porcentaje);
+  Serial.println(" %");
+
+  Serial.print("BrilloPWM =");
+  Serial.println(brilloPWM);
+
+  Serial.print("LED =");
+
+  if (estadoLED == HIGH) {
+    Serial.println("ENCENDIDO");
+  } else {
+    Serial.println("APAGADO");
+  }
+
+  Serial.println("----------------------------------------");
 }
 
 void setup() {
-    Serial.begin(9600);
-    pinMode(PIN_LED_PWM, OUTPUT);
+  Serial.begin(9600);
+  pinMode(PIN_LED, OUTPUT);
 }
 
 void loop() {
-    int historialLecturas[SIZE_REGISTRO];
-    int media = 0, minimo = 0, maximo = 0;
-    float tension = 0.0;
-    int porcentaje = 0, intensidad = 0;
-    int estadoLogico = LOW;
+  int lecturas[CANTIDAD_LECTURAS];
 
-    llenarHistorial(PIN_POT_ANALOGICO, historialLecturas, SIZE_REGISTRO, DELAY_REGISTRO_MS);
-    analizarHistorial(historialLecturas, SIZE_REGISTRO, &media, &minimo, &maximo);
-    ajustarEscalaPromedio(media, &tension, &porcentaje, &intensidad);
-    evaluarCondicionLED(porcentaje, RANGO_UMBRAL, &estadoLogico);
-    comandarSalidaCompleta(PIN_LED_PWM, estadoLogico, intensidad);
-    imprimirMuestrasArreglo(historialLecturas, SIZE_REGISTRO);
-    generarDiagnosticoSerial(media, minimo, maximo, tension, porcentaje, intensidad, estadoLogico);
+  int promedio = 0;
+  int minimo = 0;
+  int maximo = 0;
 
-    delay(RETARDO_BUCLE_MS);
+  float voltaje = 0.0;
+  int porcentaje = 0;
+  int brilloPWM = 0;
+
+  int estadoLED = LOW;
+
+  tomarLecturas(PIN_POTENCIOMETRO, lecturas, CANTIDAD_LECTURAS, PAUSA_ENTRE_LECTURAS_MS);
+
+  analizarLecturas(lecturas, CANTIDAD_LECTURAS, &promedio, &minimo, &maximo);
+
+  convertirPromedio(promedio, &voltaje, &porcentaje, &brilloPWM);
+
+  decidirEstadoLED(porcentaje, UMBRAL_LED, &estadoLED);
+
+  aplicarSalidaLED(PIN_LED, estadoLED, brilloPWM);
+
+  mostrarLecturas(lecturas, CANTIDAD_LECTURAS);
+  mostrarReporte(promedio, minimo, maximo, voltaje, porcentaje, brilloPWM, estadoLED);
+
+  delay(PAUSA_CICLO_MS);
 }

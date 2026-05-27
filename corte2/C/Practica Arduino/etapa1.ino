@@ -1,14 +1,14 @@
-const int PIN_POT = A2; 
+const int PIN_POTENCIOMETRO = A0;
 
 void setup() {
-    Serial.begin(9600);
+  Serial.begin(9600);
 }
 
 void loop() {
-    int canalLectura = analogRead(PIN_POT);
+  int valorADC = analogRead(PIN_POTENCIOMETRO);
 
-    Serial.print("LECTURA RAW: ");
-    Serial.println(canalLectura);
+  Serial.print("ADC = ");
+  Serial.println(valorADC);
 
-    delay(500);
+  delay(500);
 }

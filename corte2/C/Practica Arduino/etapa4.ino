@@ -1,59 +1,67 @@
-const int PIN_POT_ANALOGICO = A2;
-const int PIN_LED_PWM = 10;
-const int LIMIT_ADC = 1023;
-const float VOLTS_REF = 5.0;
-const int RANGO_UMBRAL = 50;
+const int PIN_POTENCIOMETRO = A0;
+const int PIN_LED = 9;
+const int ADC_MAX = 1023;
+const float VREF = 5.0;
+const int UMBRAL_LED = 50;
 
-void procesarEntradaAnalogica(int pin, int *registroADC, float *medicionVoltios, int *calculoPorcentaje) {
-    if (registroADC == nullptr || medicionVoltios == nullptr || calculoPorcentaje == nullptr) return;
-    *registroADC = analogRead(pin);
-    *medicionVoltios = (*registroADC * VOLTS_REF) / LIMIT_ADC;
-    *calculoPorcentaje = (int)((long)(*registroADC) * 100L / LIMIT_ADC);
+void leerPotenciometro(int pin, int *valorADC, float *voltaje, int *porcentaje) {
+  if (valorADC == nullptr || voltaje == nullptr || porcentaje == nullptr) {
+    return;
+  }
+
+  *valorADC = analogRead(pin);
+  *voltaje = (*valorADC * VREF) / ADC_MAX;
+  *porcentaje = (int)((long)(*valorADC) * 100L / ADC_MAX);
 }
 
-void calcularAccionLED(int calculoPorcentaje, int limite, int *registroEstado) {
-    if (registroEstado == nullptr) return;
-    if (calculoPorcentaje >= limite) {
-        *registroEstado = HIGH;
-    } else {
-        *registroEstado = LOW;
-    }
+void decidirEstadoLED(int porcentaje, int umbral, int *estadoLED) {
+  if (estadoLED == nullptr) return;
+
+  if (porcentaje >= umbral) {
+    *estadoLED = HIGH;
+  } else {
+    *estadoLED = LOW;
+  }
 }
 
-void ejecutarSalidaLED(int pinLED, int estado) {
-    digitalWrite(pinLED, estado);
+void aplicarEstadoLED(int pinLED, int estadoLED) {
+  digitalWrite(pinLED, estadoLED);
 }
 
-void mostrarReporteConsola(int registroADC, float medicionVoltios, int calculoPorcentaje, int estado) {
-    Serial.print("RegADC = ");
-    Serial.print(registroADC);
-    Serial.print(" | Volts = ");
-    Serial.print(medicionVoltios, 2);
-    Serial.print("V | Nivel = ");
-    Serial.print(calculoPorcentaje);
-    Serial.print("% | Diodo = ");
-    if (estado == HIGH) {
-        Serial.println("[ACTIVO]");
-    } else {
-        Serial.println("[INACTIVO]");
-    }
+void mostrarDatos(int valorADC, float voltaje, int porcentaje, int estadoLED) {
+  Serial.print("ADC=");
+  Serial.print(valorADC);
+  Serial.print("|Voltaje=");
+  Serial.print(voltaje, 2);
+  Serial.print("V");
+  Serial.print("|Porcentaje=");
+  Serial.print(porcentaje);
+  Serial.print("%");
+  Serial.print("|LED=");
+
+  if (estadoLED == HIGH) {
+    Serial.println("ENCENDIDO");
+  } else {
+    Serial.println("APAGADO");
+  }
 }
 
 void setup() {
-    Serial.begin(9600);
-    pinMode(PIN_LED_PWM, OUTPUT);
+  Serial.begin(9600);
+  pinMode(PIN_LED, OUTPUT);
 }
 
 void loop() {
-    int registroADC = 0;
-    float medicionVoltios = 0.0;
-    int calculoPorcentaje = 0;
-    int estadoDiodo = LOW;
+  int valorADC = 0;
+  float voltaje = 0.0;
+  int porcentaje = 0;
+  int estadoLED = LOW;
 
-    procesarEntradaAnalogica(PIN_POT_ANALOGICO, &registroADC, &medicionVoltios, &calculoPorcentaje);
-    calcularAccionLED(calculoPorcentaje, RANGO_UMBRAL, &estadoDiodo);
-    ejecutarSalidaLED(PIN_LED_PWM, estadoDiodo);
-    mostrarReporteConsola(registroADC, medicionVoltios, calculoPorcentaje, estadoDiodo);
+  leerPotenciometro(PIN_POTENCIOMETRO, &valorADC, &voltaje, &porcentaje);
+  decidirEstadoLED(porcentaje, UMBRAL_LED, &estadoLED);
+  aplicarEstadoLED(PIN_LED, estadoLED);
 
-    delay(500);
+  mostrarDatos(valorADC, voltaje, porcentaje, estadoLED);
+
+  delay(500);
 }

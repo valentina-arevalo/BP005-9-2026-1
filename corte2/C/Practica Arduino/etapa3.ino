@@ -1,37 +1,40 @@
-const int PIN_POT_ANALOGICO = A2;
-const int LIMIT_ADC = 1023;
-const float VOLTS_REF = 5.0;
+const int PIN_POTENCIOMETRO = A0;
+const int ADC_MAX = 1023;
+const float VREF = 5.0;
 
-void procesarEntradaAnalogica(int pin, int *registroADC, float *medicionVoltios, int *calculoPorcentaje) {
-    if (registroADC == nullptr || medicionVoltios == nullptr || calculoPorcentaje == nullptr) {
-        return;
-    }
-    *registroADC = analogRead(pin);
-    *medicionVoltios = (*registroADC * VOLTS_REF) / LIMIT_ADC;
-    *calculoPorcentaje = (int)((long)(*registroADC) * 100L / LIMIT_ADC);
+void leerPotenciometro(int pin, int *valorADC, float *voltaje, int *porcentaje) {
+  if (valorADC == nullptr || voltaje == nullptr || porcentaje == nullptr) {
+    return;
+  }
+
+  *valorADC = analogRead(pin);
+  *voltaje = (*valorADC * VREF) / ADC_MAX;
+  *porcentaje = (int)((long)(*valorADC) * 100L / ADC_MAX);
 }
 
-void mostrarReporteConsola(int registroADC, float medicionVoltios, int calculoPorcentaje) {
-    Serial.print("RegADC: ");
-    Serial.print(registroADC);
-    Serial.print(" -> Tension: ");
-    Serial.print(medicionVoltios, 2);
-    Serial.print(" V | Prc: ");
-    Serial.print(calculoPorcentaje);
-    Serial.println(" %");
+void mostrarDatos(int valorADC, float voltaje, int porcentaje) {
+  Serial.print("ADC=");
+  Serial.print(valorADC);
+  Serial.print("|Voltaje=");
+  Serial.print(voltaje, 2);
+  Serial.print("V");
+  Serial.print("|Porcentaje=");
+  Serial.print(porcentaje);
+  Serial.println(" %");
 }
 
 void setup() {
-    Serial.begin(9600);
+  Serial.begin(9600);
 }
 
 void loop() {
-    int registroADC = 0;
-    float medicionVoltios = 0.0;
-    int calculoPorcentaje = 0;
+  int valorADC = 0;
+  float voltaje = 0.0;
+  int porcentaje = 0;
 
-    procesarEntradaAnalogica(PIN_POT_ANALOGICO, &registroADC, &medicionVoltios, &calculoPorcentaje);
-    mostrarReporteConsola(registroADC, medicionVoltios, calculoPorcentaje);
+  leerPotenciometro(PIN_POTENCIOMETRO, &valorADC, &voltaje, &porcentaje);
 
-    delay(500);
+  mostrarDatos(valorADC, voltaje, porcentaje);
+
+  delay(500);
 }

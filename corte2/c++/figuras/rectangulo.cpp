@@ -2,20 +2,15 @@
 using namespace std;
 
 int main() {
-    int fila, col;
-    int n = 5;
-    int ancho = 2*n - 1;
+    int i, j;
 
-    for(fila = 1; fila <= ancho; fila++) {
-        int dist = (fila <= n) ? n - fila : fila - n;
+    for (i = 1; i <= 3; i++) {
 
-        for(col = 1; col <= ancho; col++) {
-            if(col == dist + 1 || col == ancho - dist)
-                cout << "$";
-            else
-                cout << " ";
+        for (j = 1; j <= 10; j++) {
+            cout << "# ";
         }
-        cout << "\n";
+
+        cout << endl;
     }
 
     return 0;

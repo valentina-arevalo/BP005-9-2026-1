@@ -12,7 +12,7 @@ while ( columna <= fila ) {
  }
 
  printf ("\n") ;
- fila - -;
+ fila --;
  }
 
  return 0;

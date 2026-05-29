@@ -1,130 +1,153 @@
 #include <stdio.h>
-#include <stdlib.h> 
+#include <stdlib.h>
 
 void leerArreglo(int *datos, int n) {
+
     int i;
+
     for (i = 0; i < n; i++) {
-        printf("Arreglo [%d]: ", i);
+
+        printf("Ingrese datos[%d]: ", i);
+
         scanf("%d", &datos[i]);
     }
 }
 
 void mostrarArreglo(int *datos, int n) {
+
     int i;
-    printf("Arreglo guardado: ");
+
     for (i = 0; i < n; i++) {
+
         printf("%d ", datos[i]);
     }
+
     printf("\n");
 }
 
-void analizarArreglo(int *datos, int n, int *suma, int *mayor, int *menor) {
+int sumarArreglo(int *datos, int n) {
+
+    int suma = 0;
+
     int i;
-    *suma = 0;
-    *mayor = datos[0];
-    *menor = datos[0];
 
     for (i = 0; i < n; i++) {
-        *suma += datos[i];
-        if (datos[i] > *mayor) {
-            *mayor = datos[i];
-        }
-        if (datos[i] < *menor) {
-            *menor = datos[i];
+
+        suma = suma + datos[i];
+    }
+
+    return suma;
+}
+
+void leerMatriz(int *m,
+                int filas,
+                int columnas) {
+
+    int i;
+    int j;
+
+    for (i = 0; i < filas; i++) {
+
+        for (j = 0; j < columnas; j++) {
+
+            printf("m[%d][%d]: ",
+                   i,
+                   j);
+
+            scanf("%d",
+                  &m[i * columnas + j]);
         }
     }
 }
 
-void leerMatriz(int *matriz, int filas, int columnas) {
-    int i, j;
-    for (i = 0; i < filas; i++) {
-        for (j = 0; j < columnas; j++) {
-            printf("Matriz [%d][%d]: ", i, j);
-            scanf("%d", &matriz[i * columnas + j]);
-        }
-    }
-}
+void mostrarMatriz(int *m,
+                   int filas,
+                   int columnas) {
 
-void mostrarMatriz(int *matriz, int filas, int columnas) {
-    int i, j;
-    printf("Matriz guardada:\n");
+    int i;
+    int j;
+
     for (i = 0; i < filas; i++) {
+
         for (j = 0; j < columnas; j++) {
-            printf("%d\t", matriz[i * columnas + j]);
+
+            printf("%d ",
+                   m[i * columnas + j]);
         }
+
         printf("\n");
     }
 }
 
-int sumarMatriz(int *matriz, int filas, int columnas) {
-    int i, j;
+int sumarMatriz(int *m,
+                int filas,
+                int columnas) {
+
     int suma = 0;
+
+    int i;
+    int j;
+
     for (i = 0; i < filas; i++) {
+
         for (j = 0; j < columnas; j++) {
-            suma += matriz[i * columnas + j];
+
+            suma =
+            suma + m[i * columnas + j];
         }
     }
+
     return suma;
 }
 
 int main() {
-    int n_arreglo;
-    int *arregloDinamico = NULL;
-    int sumaArr, mayorArr, menorArr;
-    int f_matriz, c_matriz;
-    int *matrizDinamica = NULL;
-    int sumaMat;
-    printf("        PROYECTO INTEGRADOR: MEMORIA DINAMICA     \n");
-  
-    printf("--- Bloque 1: Arreglo Dinamico ---\n");
-    printf("¿Cuantos elementos desea asignar al arreglo?: ");
-    scanf("%d", &n_arreglo);
 
-    arregloDinamico = (int *)malloc(n_arreglo * sizeof(int));
-    if (arregloDinamico == NULL) {
-        printf("Error: No se pudo asignar memoria para el arreglo.\n");
-        return 1; 
-    }
+    int n = 5;
 
-    leerArreglo(arregloDinamico, n_arreglo);
-    printf("\n");
-    mostrarArreglo(arregloDinamico, n_arreglo);
-    analizarArreglo(arregloDinamico, n_arreglo, &sumaArr, &mayorArr, &menorArr);
+    int *datos =
+    malloc(n * sizeof(int));
 
-    printf("\nReporte del Arreglo:\n");
-    printf("-> Suma de elementos: %d\n", sumaArr);
-    printf("-> Elemento mayor: %d\n", mayorArr);
-    printf("-> Elemento menor: %d\n\n", menorArr);
+    int filas = 2;
+    int columnas = 3;
 
-    printf("--- Bloque 2: Matriz Dinamica Lineal ---\n");
-    printf("Ingrese numero de filas: ");
-    scanf("%d", &f_matriz);
-    printf("Ingrese numero de columnas: ");
-    scanf("%d", &c_matriz);
+    int *m =
+    malloc(filas * columnas *
+           sizeof(int));
 
-    matrizDinamica = (int *)malloc(f_matriz * c_matriz * sizeof(int));
-    if (matrizDinamica == NULL) {
-        printf("Error: No se pudo asignar memoria para la matriz.\n");
-        free(arregloDinamico); 
+    if (datos == NULL || m == NULL) {
+
+        printf("Error de memoria.\n");
+
         return 1;
     }
 
-    leerMatriz(matrizDinamica, f_matriz, c_matriz);
-    printf("\n");
-    mostrarMatriz(matrizDinamica, f_matriz, c_matriz);
-    sumaMat = sumarMatriz(matrizDinamica, f_matriz, c_matriz);
+    printf("=== ARREGLO ===\n");
 
-    printf("\nReporte de la Matriz:\n");
-    printf("-> Suma total de celdas: %d\n\n", sumaMat);
+    leerArreglo(datos, n);
 
-    printf("Liberando memoria asignada dinamicamente...\n");
-    
-    free(arregloDinamico);
-    arregloDinamico = NULL;
-    
-    free(matrizDinamica);
-    matrizDinamica = NULL;
+    mostrarArreglo(datos, n);
 
-    printf("Programa finalizado con exito.\n");
+    printf("Suma arreglo = %d\n",
+           sumarArreglo(datos, n));
+
+    printf("\n=== MATRIZ ===\n");
+
+    leerMatriz(m, filas, columnas);
+
+    mostrarMatriz(m, filas, columnas);
+
+    printf("Suma matriz = %d\n",
+           sumarMatriz(m,
+                       filas,
+                       columnas));
+
+    free(datos);
+
+    free(m);
+
+    datos = NULL;
+
+    m = NULL;
+
     return 0;
 }

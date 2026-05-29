@@ -1,44 +1,55 @@
 #include <stdio.h>
 
-#define FILAS 2
 #define COLUMNAS 3
 
-void mostrarMatrizEstatica(int m[][COLUMNAS], int filas) {
-    int i, j;
-    printf("Contenido de la matriz:\n");
+void mostrarMatriz(int m[][COLUMNAS],
+                   int filas) {
+
+    int i;
+    int j;
+
     for (i = 0; i < filas; i++) {
+
         for (j = 0; j < COLUMNAS; j++) {
-            printf("%d\t", m[i][j]); 
+
+            printf("%d ", m[i][j]);
         }
-        printf("\n"); 
+
+        printf("\n");
     }
 }
 
-int sumarMatrizEstatica(int m[][COLUMNAS], int filas) {
-    int i, j;
-    int suma total = 0;
-    
+int sumarMatriz(int m[][COLUMNAS],
+                int filas) {
+
+    int i;
+    int j;
+
+    int suma = 0;
+
     for (i = 0; i < filas; i++) {
+
         for (j = 0; j < COLUMNAS; j++) {
-            suma_total += m[i][j];
+
+            suma = suma + m[i][j];
         }
     }
-    return suma_total;
+
+    return suma;
 }
 
 int main() {
-    int miMatriz[FILAS][COLUMNAS] = {
-        {5, 12, 7},
-        {20, 3, 8}
+
+    int m[2][COLUMNAS] = {
+
+        {1, 2, 3},
+        {4, 5, 6}
     };
-    int sumaTotal;
 
-    printf("--- PRACTICA 02: MATRIZ ESTATICA ---\n");
+    mostrarMatriz(m, 2);
 
-    mostrarMatrizEstatica(miMatriz, FILAS);
-
-    sumaTotal = sumarMatrizEstatica(miMatriz, FILAS);
-    printf("\nLa suma de todos los elementos de la matriz es: %d\n", sumaTotal);
+    printf("Suma = %d\n",
+           sumarMatriz(m, 2));
 
     return 0;
 }

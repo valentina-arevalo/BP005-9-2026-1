@@ -1,21 +1,22 @@
 #include <iostream>
 using namespace std;
+
 int main() {
-/* Declaramos una matriz de 2 filas y 3 columnas. */
-int m [2] [3] = {
-{1, 2, 3},
-{4, 5, 6}
-};
-/* p apunta al primer entero de la matriz. */
-int *p=&m[0][0];
-/* total indica cuantos elementos tiene la matriz. */
-int total = 2 * 3;
-/* k recorre la matriz como una secuencia lineal. */
-int k;
-/* Mostramos todos los elementos usando *(p+k). */
-for (k=0; k < total; k++) {
-cout << "%d ", *(p + k);
-}
-cout << "\n";
-return 0;
+
+    int m[2][3] = {
+
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+
+    cout << "m[0][0] = "
+         << m[0][0] << endl;
+
+    cout << "m[0][2] = "
+         << m[0][2] << endl;
+
+    cout << "m[1][1] = "
+         << m[1][1] << endl;
+
+    return 0;
 }

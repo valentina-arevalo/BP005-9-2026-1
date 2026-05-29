@@ -2,16 +2,33 @@
 using namespace std;
 
 int main() {
-    int i, j, k;
+    int i, j;
 
-    for(i = 1; i <= 6; i++) {
-        for(j = 1; j <= 6 - i; j++) {
+    // techo
+    for (i = 1; i <= 5; i++) {
+
+        for (j = 1; j <= 5 - i; j++)
             cout << " ";
+
+        for (j = 1; j <= 2 * i - 1; j++)
+            cout << "^";
+
+        cout << endl;
+    }
+
+    // base
+    for (i = 1; i <= 4; i++) {
+
+        for (j = 1; j <= 9; j++) {
+
+            if (j == 1 || j == 9 || i == 4)
+                cout << "#";
+            else
+                cout << " ";
+
         }
-        for(k = 1; k <= 2*i - 1; k++) {
-            cout << "o";
-        }
-        cout << "\n";
+
+        cout << endl;
     }
 
     return 0;

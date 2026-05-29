@@ -1,14 +1,15 @@
 #include <iostream>
 using namespace std;
+
 int main() {
 
-int datos [5] = {8, 3, 15, 6, 10};
+    int datos[5] = {8, 3, 15, 6, 10};
 
-int i;
+    cout << datos[0] << endl;
+    cout << datos[1] << endl;
+    cout << datos[2] << endl;
+    cout << datos[3] << endl;
+    cout << datos[4] << endl;
 
-for (i=0; i < 5; i++) {
-
-cout << "datos [%d] = %d\n", i, datos [i];
-}
-return 0;
+    return 0;
 }

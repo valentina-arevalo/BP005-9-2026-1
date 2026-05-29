@@ -2,18 +2,36 @@
 using namespace std;
 
 int main() {
-    int i, j, k;
+    int fila = 5, esp, sim;
 
-    for(i = 1; i <= 7; i++) {
-        for(j = 1; j <= 7 - i; j++) cout << " ";
-        for(k = 1; k <= 2*i - 1; k++) cout << "*";
-        cout << "\n";
+    while (fila >= 1) {
+
+        esp = 5 - fila;
+        while (esp--)
+            cout << " ";
+
+        sim = 2 * fila - 1;
+        while (sim--)
+            cout << "@";
+
+        cout << endl;
+        fila--;
     }
 
-    for(i = 6; i >= 1; i--) {
-        for(j = 1; j <= 7 - i; j++) cout << " ";
-        for(k = 1; k <= 2*i - 1; k++) cout << "*";
-        cout << "\n";
+    fila = 2;
+
+    while (fila <= 5) {
+
+        esp = 5 - fila;
+        while (esp--)
+            cout << " ";
+
+        sim = 2 * fila - 1;
+        while (sim--)
+            cout << "@";
+
+        cout << endl;
+        fila++;
     }
 
     return 0;

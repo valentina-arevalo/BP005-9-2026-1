@@ -2,13 +2,13 @@
 using namespace std;
 
 int main() {
-    int i, j;
+    int fila, columna;
 
-    for(i = 1; i <= 6; i++) {
-        for(j = 1; j <= 6; j++) {
-            cout << "@ ";
+    for (fila = 1; fila <= 5; fila++) {
+        for (columna = 1; columna <= 5; columna++) {
+            cout << "* ";
         }
-        cout << "\n";
+        cout << endl;
     }
 
     return 0;

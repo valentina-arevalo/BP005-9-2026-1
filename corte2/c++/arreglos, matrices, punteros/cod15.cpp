@@ -1,27 +1,31 @@
 #include <iostream>
 using namespace std;
 
-int main(){
+const int COLUMNAS = 3;
 
-int m[2][3]={
-{1,2,3},
-{4,5,6}
-};
+void mostrarMatriz(int m[][COLUMNAS],
+                   int filas) {
 
-int i,j;
+    for (int i = 0; i < filas; i++) {
 
-for(i=0;i<2;i++){
+        for (int j = 0; j < COLUMNAS; j++) {
 
-for(j=0;j<3;j++){
+            cout << m[i][j] << " ";
+        }
 
-cout << "%d ",m[i][j];
-
+        cout << endl;
+    }
 }
 
-cout << "\n";
+int main() {
 
-}
+    int m[2][COLUMNAS] = {
 
-return 0;
+        {1, 2, 3},
+        {4, 5, 6}
+    };
 
+    mostrarMatriz(m, 2);
+
+    return 0;
 }

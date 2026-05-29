@@ -1,14 +1,23 @@
 #include <iostream>
 using namespace std;
+
 int main() {
 
-int datos [5] = {8, 3, 15, 6, 10};
+    int datos[3] = {10, 20, 30};
 
-int i;
+    int *p = datos;
 
-for (i=0; i < 5; i++) {
-cout << "datos [%d] = %d, direccion = %p\n",
-i, datos [i], (void *)&datos[i];
-}
-return 0;
+    cout << "datos[1] = "
+         << datos[1] << endl;
+
+    cout << "*(datos + 1) = "
+         << *(datos + 1) << endl;
+
+    cout << "*(p + 1) = "
+         << *(p + 1) << endl;
+
+    cout << "p[1] = "
+         << p[1] << endl;
+
+    return 0;
 }

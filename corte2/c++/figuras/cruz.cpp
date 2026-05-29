@@ -2,17 +2,27 @@
 using namespace std;
 
 int main() {
-    int i = 6, j;
+    int fila = 1, col;
+    int n = 9, centro = 5;
 
-    while(i >= 1) {
-        j = 1;
-        while(j <= i) {
-            cout << "X ";
-            j++;
-        }
-        cout << "\n";
-        i--;
-    }
+    do {
+        col = 1;
+
+        do {
+
+            if (fila == centro || col == centro)
+                cout << "+";
+            else
+                cout << " ";
+
+            col++;
+
+        } while (col <= n);
+
+        cout << endl;
+        fila++;
+
+    } while (fila <= n);
 
     return 0;
 }

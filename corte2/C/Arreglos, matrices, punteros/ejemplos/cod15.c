@@ -1,20 +1,33 @@
 #include <stdio.h>
-int main() {
-/* Declaramos una matriz de 2 filas y 3 columnas. */
-int m [2] [3] = {
-{1, 2, 3},
-{4, 5, 6}
-};
-/* p apunta al primer entero de la matriz. */
-int *p=&m[0][0];
-/* total indica cuantos elementos tiene la matriz. */
-int total = 2 * 3;
-/* k recorre la matriz como una secuencia lineal. */
-int k;
-/* Mostramos todos los elementos usando *(p+k). */
-for (k=0; k < total; k++) {
-printf("%d ", *(p + k));
+
+#define COLUMNAS 3
+
+void mostrarMatriz(int m[][COLUMNAS], int filas) {
+
+    int i;
+    int j;
+
+    for (i = 0; i < filas; i++) {
+
+        for (j = 0; j < COLUMNAS; j++) {
+
+            printf("%d ", m[i][j]);
+
+        }
+
+        printf("\n");
+    }
 }
-printf("\n");
-return 0;
+
+int main() {
+
+    int m[2][COLUMNAS] = {
+
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+
+    mostrarMatriz(m, 2);
+
+    return 0;
 }

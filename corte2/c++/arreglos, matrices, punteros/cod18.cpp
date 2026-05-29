@@ -1,31 +1,55 @@
 #include <iostream>
 using namespace std;
-void incrementarTodos (int *datos, int n) {
 
-int i;
-if (datos == NULL) {
-return;
+int sumarMatriz(int *matriz,
+                int filas,
+                int columnas) {
+
+    int suma = 0;
+
+    if (matriz == nullptr) {
+
+        return 0;
+    }
+
+    for (int i = 0; i < filas; i++) {
+
+        for (int j = 0; j < columnas; j++) {
+
+            suma = suma +
+                   matriz[i * columnas + j];
+        }
+    }
+
+    return suma;
 }
 
-for (i=0; i<n; i++) {
-datos [i] = datos [i] + 1;
-}
-}
-void mostrarArreglo (int *datos, int n) {
-int i;
-
-for (i=0; i < n; i++) {
-cout << "%d ", datos [i];
-}
-cout << "\n";
-}
 int main() {
-int datos [5] = {8, 3, 15, 6, 10};
 
-cout << "Antes: ";
-mostrarArreglo (datos, 5;
-incrementarTodos (datos, 5;
-cout << "Despues: ";
-mostrarArreglo (datos, 5;
-return 0;
+    int filas = 2;
+    int columnas = 3;
+
+    int *matriz =
+    new int[filas * columnas];
+
+    for (int i = 0; i < filas; i++) {
+
+        for (int j = 0; j < columnas; j++) {
+
+            matriz[i * columnas + j] =
+            i * columnas + j + 1;
+        }
+    }
+
+    cout << "Suma = "
+         << sumarMatriz(matriz,
+                        filas,
+                        columnas)
+         << endl;
+
+    delete[] matriz;
+
+    matriz = nullptr;
+
+    return 0;
 }

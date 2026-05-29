@@ -1,44 +1,82 @@
 #include <stdio.h>
 
-#define FILAS 2
-#define COLUMNAS 3
+void leerArreglo(int *datos, int n) {
 
-void mostrarMatrizEstatica(int m[][COLUMNAS], int filas) {
-    int i, j;
-    printf("Contenido de la matriz:\n");
-    for (i = 0; i < filas; i++) {
-        for (j = 0; j < COLUMNAS; j++) {
-            printf("%d\t", m[i][j]); // \t añade un espacio de tabulación
-        }
-        printf("\n"); // Salto de línea al terminar cada fila
+    int i;
+
+    if (datos == NULL) {
+        return;
+    }
+
+    for (i = 0; i < n; i++) {
+
+        printf("Ingrese datos[%d]: ", i);
+
+        scanf("%d", &datos[i]);
     }
 }
 
-int sumarMatrizEstatica(int m[][COLUMNAS], int filas) {
-    int i, j;
-    int suma total = 0;
-    
-    for (i = 0; i < filas; i++) {
-        for (j = 0; j < COLUMNAS; j++) {
-            suma_total += m[i][j];
-        }
+void mostrarArreglo(int *datos, int n) {
+
+    int i;
+
+    if (datos == NULL) {
+        return;
     }
-    return suma_total;
+
+    for (i = 0; i < n; i++) {
+
+        printf("%d ", datos[i]);
+    }
+
+    printf("\n");
+}
+
+void analizarArreglo(int *datos,
+                     int n,
+                     int *suma,
+                     float *promedio) {
+
+    int i;
+
+    if (datos == NULL ||
+        suma == NULL ||
+        promedio == NULL) {
+
+        return;
+    }
+
+    *suma = 0;
+
+    for (i = 0; i < n; i++) {
+
+        *suma = *suma + datos[i];
+    }
+
+    *promedio = (float)(*suma) / n;
 }
 
 int main() {
-    int miMatriz[FILAS][COLUMNAS] = {
-        {5, 12, 7},
-        {20, 3, 8}
-    };
-    int sumaTotal;
 
-    printf("--- PRACTICA 02: MATRIZ ESTATICA ---\n");
+    int datos[5];
 
-    mostrarMatrizEstatica(miMatriz, FILAS);
+    int suma;
 
-    sumaTotal = sumarMatrizEstatica(miMatriz, FILAS);
-    printf("\nLa suma de todos los elementos de la matriz es: %d\n", sumaTotal);
+    float promedio;
+
+    leerArreglo(datos, 5);
+
+    mostrarArreglo(datos, 5);
+
+    analizarArreglo(datos,
+                     5,
+                     &suma,
+                     &promedio);
+
+    printf("Suma = %d\n", suma);
+
+    printf("Promedio = %.2f\n",
+           promedio);
 
     return 0;
 }

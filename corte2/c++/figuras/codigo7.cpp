@@ -1,20 +1,22 @@
- # include <stdio.h>
+#include <iostream>
+using namespace std;
 
- int main () {
- int fila = 1;
- int columna ;
+int main() {
+    int fila = 1;
+    int columna;
 
- while ( fila <= 4) {
- columna = 1;
+    do {
+        columna = 1;
 
- while ( columna <= 4) {
- printf ("X ";
- columna ++;
- }
+        do {
+            cout << "= ";
+            columna++;
+        } while (columna <= 6);
 
- printf ("\n") ;
- fila ++;
- }
+        cout << endl;
+        fila++;
 
- return 0;
- }
+    } while (fila <= 3);
+
+    return 0;
+}

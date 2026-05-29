@@ -1,16 +1,23 @@
 #include <iostream>
 using namespace std;
+
 int main() {
 
-int datos [5] = {8, 3, 15, 6, 10};
+    int datos[3] = {10, 20, 30};
 
-int *p = datos;
+    int *p = datos;
 
-int i;
+    cout << "datos[1] = "
+         << datos[1] << endl;
 
-for (i=0; i < 5; i++) {
+    cout << "*(datos + 1) = "
+         << *(datos + 1) << endl;
 
-cout << "Elemento %d = %d \n", i, *(p+i);
-}
-return 0;
+    cout << "*(p + 1) = "
+         << *(p + 1) << endl;
+
+    cout << "p[1] = "
+         << p[1] << endl;
+
+    return 0;
 }

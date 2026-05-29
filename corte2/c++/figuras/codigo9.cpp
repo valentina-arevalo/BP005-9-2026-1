@@ -1,20 +1,23 @@
 #include <iostream>
 using namespace std;
 
- int main () {
- int fila = 1;
- int columna ;
+int main() {
+    int fila, columna;
 
- do {
- columna = 1;
- do {
- printf ("$ ";
-  columna ++;
- } while (columna <= fila) ;
+    for (fila = 1; fila <= 5; fila++) {
 
- printf ("\n") ;
- fila ++;
- } 
-while (fila <= 5) ;
-return 0;
+        for (columna = 1; columna <= 8; columna++) {
+
+            if ((fila + columna) % 2 == 0) {
+                cout << "* ";
+            } else {
+                cout << "o ";
+            }
+
+        }
+
+        cout << endl;
+    }
+
+    return 0;
 }

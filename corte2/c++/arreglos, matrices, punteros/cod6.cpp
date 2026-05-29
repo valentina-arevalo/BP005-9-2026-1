@@ -1,23 +1,21 @@
 #include <iostream>
 using namespace std;
 
+void mostrarArreglo(int datos[], int n) {
+
+    for (int i = 0; i < n; i++) {
+
+        cout << datos[i] << " ";
+    }
+
+    cout << endl;
+}
+
 int main() {
 
-    int datos[3] = {10, 20, 30};
+    int datos[5] = {8, 3, 15, 6, 10};
 
-    int *p = datos;
-
-    cout << "datos[1] = "
-         << datos[1] << endl;
-
-    cout << "*(datos + 1) = "
-         << *(datos + 1) << endl;
-
-    cout << "*(p + 1) = "
-         << *(p + 1) << endl;
-
-    cout << "p[1] = "
-         << p[1] << endl;
+    mostrarArreglo(datos, 5);
 
     return 0;
 }

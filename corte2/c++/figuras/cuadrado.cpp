@@ -2,22 +2,16 @@
 using namespace std;
 
 int main() {
-    int fila = 1, col;
-    int n = 9, centro = 5;
+    int i, j;
 
-    do {
-        col = 1;
-        do {
-            if(fila == centro || col == centro)
-                cout << "+";
-            else
-                cout << " ";
-            col++;
-        } while(col <= n;
+    for (i = 1; i <= 6; i++) {
 
-        cout << "\n";
-        fila++;
-    } while(fila <= n;
+        for (j = 1; j <= 6; j++) {
+            cout << "@ ";
+        }
+
+        cout << endl;
+    }
 
     return 0;
 }

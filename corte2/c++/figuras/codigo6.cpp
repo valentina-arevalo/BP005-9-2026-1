@@ -1,20 +1,21 @@
- #include <iostream>
+#include <iostream>
 using namespace std;
 
- int main () {
- int fila = 5;
- int columna ;
+int main() {
+    int fila = 1;
+    int columna;
 
- while ( fila >= 1) {
- columna = 1;
-while ( columna <= fila ) {
- printf ("+ ";
- columna ++;
- }
+    while (fila <= 4) {
+        columna = 1;
 
- printf ("\n") ;
- fila - -;
- }
+        while (columna <= 4) {
+            cout << "X ";
+            columna++;
+        }
 
- return 0;
- }
+        cout << endl;
+        fila++;
+    }
+
+    return 0;
+}

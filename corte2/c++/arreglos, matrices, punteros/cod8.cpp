@@ -1,13 +1,41 @@
 #include <iostream>
 using namespace std;
+
+void incrementarTodos(int *datos, int n) {
+
+    if (datos == nullptr) {
+        return;
+    }
+
+    for (int i = 0; i < n; i++) {
+
+        datos[i] = datos[i] + 1;
+    }
+}
+
+void mostrarArreglo(int *datos, int n) {
+
+    for (int i = 0; i < n; i++) {
+
+        cout << datos[i] << " ";
+    }
+
+    cout << endl;
+}
+
 int main() {
 
-int datos [3] = {10, 20, 30};
-int *p = datos;
+    int datos[5] = {8, 3, 15, 6, 10};
 
-cout << "datos [1] = %d\n", datos [1];
-cout << "*(datos + 1) = %d\n", *(datos + 1);
-cout << "*(p+1)=%d\backslash n^{\prime\prime},*(p+1))$;
-cout << "p [1] = %d\n", p[1];
-return 0;
+    cout << "Antes: ";
+
+    mostrarArreglo(datos, 5);
+
+    incrementarTodos(datos, 5);
+
+    cout << "Despues: ";
+
+    mostrarArreglo(datos, 5);
+
+    return 0;
 }

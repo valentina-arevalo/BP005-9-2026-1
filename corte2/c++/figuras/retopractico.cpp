@@ -1,18 +1,38 @@
- # include <stdio.h>
+#include <iostream>
+using namespace std;
 
- int main () {
- int fila , columna ;
+int main() {
+    int n;
+    int fila, espacios, simbolos;
 
- for( fila = 1; fila <= 5; fila ++) {
- for( columna = 1; columna <= 8; columna ++) {
- if(( fila + columna ) % 2 == 0) {
- cout << "* ";
- } else {
- cout << "o ";
- }
- }
- cout << "\n") ;
- }
+    cout << "Ingrese el tamano del rombo: ";
+    cin >> n;
 
- return 0;
- }
+    for (fila = 1; fila <= n; fila++) {
+
+        for (espacios = 1; espacios <= n - fila; espacios++) {
+            cout << " ";
+        }
+
+        for (simbolos = 1; simbolos <= 2 * fila - 1; simbolos++) {
+            cout << "*";
+        }
+
+        cout << endl;
+    }
+
+    for (fila = n - 1; fila >= 1; fila--) {
+
+        for (espacios = 1; espacios <= n - fila; espacios++) {
+            cout << " ";
+        }
+
+        for (simbolos = 1; simbolos <= 2 * fila - 1; simbolos++) {
+            cout << "*";
+        }
+
+        cout << endl;
+    }
+
+    return 0;
+}

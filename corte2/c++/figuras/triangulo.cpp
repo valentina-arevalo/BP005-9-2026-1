@@ -2,30 +2,15 @@
 using namespace std;
 
 int main() {
-    int fila = 5, esp, sim;
+    int i, j;
 
-    while(fila >= 1) {
-        esp = 5 - fila;
-        while(esp--) cout << " ";
+    for (i = 1; i <= 7; i++) {
 
-        sim = 2*fila - 1;
-        while(sim--) cout << "@";
+        for (j = 1; j <= i; j++) {
+            cout << "+ ";
+        }
 
-        cout << "\n";
-        fila--;
-    }
-
-    fila = 2;
-
-    while(fila <= 5) {
-        esp = 5 - fila;
-        while(esp--) cout << " ";
-
-        sim = 2*fila - 1;
-        while(sim--) cout << "@";
-
-        cout << "\n";
-        fila++;
+        cout << endl;
     }
 
     return 0;

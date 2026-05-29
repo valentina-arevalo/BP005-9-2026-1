@@ -1,38 +1,23 @@
 #include <iostream>
 using namespace std;
-#include <stdlib.h>
+
 int main() {
-/* filas y columnas definen el tamano de la matriz. */
-int filas = 2;
-int columnas = 3;
-/* i y j se usaran para recorrer filas y columnas. */
-int i;
-int j;
-/* matriz apuntara al primer elemento del bloque dinamico. */
-int *matriz = NULL;
-/* Reservamos memoria para filas * columnas * sizeof(int) enteros. */
-matriz = malloc(filas * columnas * sizeof(int);
-/* Verificamos si la reserva fue exitosa. */
-if (matriz == NULL) {
-cout << "No se pudo reservar memoria.\n";
-return 1;
-}
-/* Llenamos la matriz con valores sencillos. */
-for (i=0; i < filas; i++) {
-for (j=0; j < columnas; j++) {
-matriz [i* columnas + j]=(i+1)*10+j;
-}
-}
-/* Mostramos la matriz usando la formula i * columnas + j. */
-for (i=0; i < filas; i++) {
-for (j=0; j < columnas; j++) {
-cout << "%d ", matriz [i* columnas + j];
-}
-cout << "\n";
-}
-/* Liberamos la memoria dinamica. */
-free (matriz;
-/* Evitamos dejar un puntero colgante. */
-matriz = NULL;
-return 0;
+
+    int m[2][3] = {
+
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+
+    for (int i = 0; i < 2; i++) {
+
+        for (int j = 0; j < 3; j++) {
+
+            cout << m[i][j] << " ";
+        }
+
+        cout << endl;
+    }
+
+    return 0;
 }

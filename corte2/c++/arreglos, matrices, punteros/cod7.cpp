@@ -1,13 +1,29 @@
 #include <iostream>
 using namespace std;
-int main() {
-int m [2] [3] = {
-{1, 2, 3},
-{4, 5, 6}
-};
 
-cout << "m[0] [0] = %d\n", m[0] [0];
-cout << "m[0] [2] = %d\n", m[0] [2];
-cout << "m [1] [1] = %d\n", m[1] [1];
-return 0;
+void mostrarArreglo(int *datos, int n) {
+
+    if (datos == nullptr) {
+
+        cout << "El arreglo no es valido."
+             << endl;
+
+        return;
+    }
+
+    for (int i = 0; i < n; i++) {
+
+        cout << datos[i] << " ";
+    }
+
+    cout << endl;
+}
+
+int main() {
+
+    int datos[5] = {8, 3, 15, 6, 10};
+
+    mostrarArreglo(datos, 5);
+
+    return 0;
 }

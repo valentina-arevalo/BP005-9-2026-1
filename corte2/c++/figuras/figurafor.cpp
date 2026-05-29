@@ -2,14 +2,13 @@
 using namespace std;
 
 int main() {
-    int i = 1, j;
+    int i, j;
 
-    do {
-        j = 1;
+    for (i = 1; i <= 10; i++) {
 
-        do {
+        for (j = 1; j <= 20; j++) {
 
-            if(
+            if (
                 (i == 2 && (j >= 5 && j <= 6)) ||
                 (i == 2 && (j >= 15 && j <= 16)) ||
                 (i == 3 && (j >= 4 && j <= 9)) ||
@@ -25,12 +24,10 @@ int main() {
                 cout << " ";
             }
 
-            j++;
-        } while(j <= 20;
+        }
 
-        cout << "\n";
-        i++;
-    } while(i <= 10;
+        cout << endl;
+    }
 
     return 0;
 }

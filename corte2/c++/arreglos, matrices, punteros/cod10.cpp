@@ -1,19 +1,34 @@
 #include <iostream>
 using namespace std;
+
 int main() {
 
-int m [2] [3] = {
-{1, 2, 3},
-{4, 5, 6}
-};
+    int n;
 
-int i;
-int j;
+    cout << "Cuantos enteros desea guardar: ";
+    cin >> n;
 
-for (i=0; i<2; i++) {
-for (j=0; j<3; j++) {
-cout << "&m[%d] [%d] = %p\n", i, j, (void *)&m[i][j];
-}
-}
-return 0;
+    int *datos = new int[n];
+
+    for (int i = 0; i < n; i++) {
+
+        cout << "Ingrese datos[" << i << "]: ";
+
+        cin >> datos[i];
+    }
+
+    cout << "Datos ingresados: ";
+
+    for (int i = 0; i < n; i++) {
+
+        cout << datos[i] << " ";
+    }
+
+    cout << endl;
+
+    delete[] datos;
+
+    datos = nullptr;
+
+    return 0;
 }

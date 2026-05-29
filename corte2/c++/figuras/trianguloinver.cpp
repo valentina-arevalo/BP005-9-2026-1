@@ -2,13 +2,19 @@
 using namespace std;
 
 int main() {
-    int i, j;
+    int i = 6, j;
 
-    for(i = 1; i <= 3; i++) {
-        for(j = 1; j <= 10; j++) {
-            cout << "# ";
+    while (i >= 1) {
+
+        j = 1;
+
+        while (j <= i) {
+            cout << "X ";
+            j++;
         }
-        cout << "\n";
+
+        cout << endl;
+        i--;
     }
 
     return 0;

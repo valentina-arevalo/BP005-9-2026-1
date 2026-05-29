@@ -1,13 +1,51 @@
 #include <iostream>
 using namespace std;
+
+const int COLUMNAS = 3;
+
+void incrementarMatriz(int m[][COLUMNAS],
+                       int filas) {
+
+    for (int i = 0; i < filas; i++) {
+
+        for (int j = 0; j < COLUMNAS; j++) {
+
+            m[i][j] = m[i][j] + 1;
+        }
+    }
+}
+
+void mostrarMatriz(int m[][COLUMNAS],
+                   int filas) {
+
+    for (int i = 0; i < filas; i++) {
+
+        for (int j = 0; j < COLUMNAS; j++) {
+
+            cout << m[i][j] << " ";
+        }
+
+        cout << endl;
+    }
+}
+
 int main() {
 
-int datos [5] = {8, 3, 15, 6, 10};
+    int m[2][COLUMNAS] = {
 
-cout << "datos [0] = %d\n", datos [0];
-cout << "datos [1] = %d\n", datos [1];
-cout << "datos [2] = %d\n", datos [2];
-cout << "datos [3] = %d\n", datos [3];
-cout << "datos [4] = %d\n", datos [4];
-return 0;
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+
+    cout << "Antes:" << endl;
+
+    mostrarMatriz(m, 2);
+
+    incrementarMatriz(m, 2);
+
+    cout << "Despues:" << endl;
+
+    mostrarMatriz(m, 2);
+
+    return 0;
 }

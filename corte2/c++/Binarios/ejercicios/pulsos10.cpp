@@ -4,11 +4,11 @@
 using namespace std;
 
 int main() {
-    uint8_t pwm = 128;
+    // Variable para contar pulsos
+    uint16_t pulsos = 3500;
 
-    cout << "PWM: "
-         << static_cast<int>(pwm)
-         << endl;
+    // Mostrar valor
+    cout << "Pulsos: " << pulsos << endl;
 
     return 0;
 }
